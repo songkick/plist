@@ -6,25 +6,25 @@
   <property name="doc"        value="doc" />
   <property name="dist"       value="dist"  />
   <property name="jar"        value="dd-plist.jar" />
-  
+
   <target name="init">
     <mkdir dir="${build}" />
     <mkdir dir="${dist}" />
     <mkdir dir="${doc}" />
   </target>
-  
+
   <target name="clean">
     <delete dir="${build}" />
     <delete dir="${dist}" />
     <delete dir="${doc}"/>
   </target>
-  
+
   <target name="compile" depends="init">
     <mkdir dir="${build}/classes/" />
     <javac srcdir="${source}"
            destdir="${build}/classes/"
-           target="1.6"
-           source="1.6"
+           target="1.5"
+           source="1.5"
            debug="on" debuglevel="lines,vars,source"
            fork="true" />
   </target>
@@ -49,5 +49,5 @@
       <fileset dir="${doc}"/>
     </zip>
   </target>
-  
+
 </project>

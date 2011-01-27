@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
-import java.util.Arrays;
 
 /**
  * Parses any given property list
@@ -57,7 +56,7 @@ public class PropertyListParser {
      * @throws Exception If an error occurred while parsing.
      */
     public static NSObject parse(byte[] bytes) throws Exception {
-        byte[] magic = Arrays.copyOf(bytes, 8);
+        byte[] magic = copyOf(bytes, 8);
         String magic_string = new String(magic);
         if (magic_string.startsWith("bplist00")) {
             return BinaryPropertyListParser.parse(bytes);
@@ -120,5 +119,16 @@ public class PropertyListParser {
     public static void convertToXml(File in, File out) throws Exception {
         NSObject root = parse(in);
         saveAsXML(root, out);
+    }
+
+    /**
+     * Utility method to copy byte arrays. Mirrors Arrays.copyOf from JDK 1.6.
+     * See: http://hg.openjdk.java.net/jdk7/jdk7/jdk/file/jdk7-b76/src/share/classes/java/util/Arrays.java
+     */
+    private static byte[] copyOf(byte[] original, int newLength) {
+        byte[] copy = new byte[newLength];
+        System.arraycopy(original, 0, copy, 0,
+                         Math.min(original.length, newLength));
+        return copy;
     }
 }
